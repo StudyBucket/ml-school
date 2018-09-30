@@ -1,4 +1,4 @@
-# this file is called by the participants in order to train and test a model in cross-validation 
+# this file is called by the participants in order to train and test a model in cross-validation
 # setting. This is the development script
 
 # -*- coding: utf-8 -*-
@@ -21,13 +21,13 @@ if not os.path.isdir("logs"):
 #corpus = DataReader(os.path.join('..','data','Parzival_train.tsv')).read_corpus()
 #on Windows this looks slightly different:
 # corpus = DataReader("..\data\Parzival_train.tsv").read_corpus()
-corpus = DataReader("../data/Parzival_train.tsv").read_corpus()
+corpus = DataReader("../data/Bundestag_train.tsv").read_corpus()
 
 #THIS IS WHERE THE FEATURES ARE EXTRACTED#
 
 #the annotated corpus is send to the FeatureExtractor
 #different feature extraction functions are called here
-#in order to change which features are used, open feature_extractor.py and change the 
+#in order to change which features are used, open feature_extractor.py and change the
 #function calls
 tokens_with_features = FeatureExtractor().extract_features(corpus)
 
@@ -55,10 +55,10 @@ for i in range(num_folds):
     #
     trainer = DTTrainer(traincv)
     #trainer = NBTrainer(traincv)
-    
+
     #here the accuracy of the resulting algorithm is calculated
     acc,BL_acc= trainer.return_accuracy(testcv)
-    
+
     print("  The classifier reaches an accuracy of "+str(acc))
     print("  If I labeled all words as non-entity, the accuracy would be "+str(BL_acc))
     #if the accuracy is higher than for the previous classifiers, store the best classifier
@@ -77,5 +77,3 @@ for i in range(num_folds):
 
 #give detailed analysis of the best classifier
 besttrainer.analyze_classifier(classifier,testset)
-
-

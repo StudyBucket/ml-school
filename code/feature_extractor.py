@@ -3,6 +3,7 @@
 # -*- coding: utf-8 -*-
 
 import codecs
+import random
 
 class FeatureExtractor:
 
@@ -10,8 +11,9 @@ class FeatureExtractor:
     def __init__(self):
         pass
 
+
 	# THIS IS WHERE THE DIFFERENT FEATURE EXTRACTION FUNCTIONS ARE CALLED #
-	# here you can change which features should be used by simply changing the function calls (commenting the line out) 	
+	# here you can change which features should be used by simply changing the function calls (commenting the line out)
     def extract_features(self,corpus):
 		# featureset is a list
 	    # a possible, exemplary output of the featureset list might look like this:
@@ -19,14 +21,14 @@ class FeatureExtractor:
 		# {"surface": barks, "word_length": 5, "pos": VB, "lemma": bark, "segment_id": '===T', ...}, label)
 		# {"surface": loudly, "word_length": 6, "pos": RB, "lemma": loud, "segment_id": '===T', ...}, label) ...]
         # where {{"surface": dog, "word_length": 3, "pos": ....} stands for one words features along with its label (in test case, label is e.g. X (dummy label))
-		
+
         featureset = list()
 
 		# this for-loop loops through every token in the dictionary of the corpus while at the same time indexing it
 		# it then appends the dictionary and the annotation/label of the word to the featureset list (as seen above in the example)
         for index, token_dic in enumerate(corpus):
                     featureset.append(({"word":token_dic["surface"]},token_dic['annotation']))
-                    
+
 
                 ####################################################################################
 				# THIS IS WHERE ALL THE DIFFERENT POSSIBLE FEATURE EXTRACTION FUNCTIONS ARE CALLED #
@@ -38,15 +40,15 @@ class FeatureExtractor:
                     # 0 accesses the dictionary which is the first element of the tupel
                     # "capitalized" is the feature name
 
-                    featureset[-1][0]["pos"] = self.pos(token_dic)
+                    #featureset[-1][0]["pos"] = self.pos(token_dic)
                     #featureset[-1][0]["surface"] = self.surface(token_dic)
                     #featureset[-1][0]["surface_backwards"] = self.surface_backwards(token_dic)
                     #featureset[-1][0]["surface_every_second"] = self.surface_every_second(token_dic)
                     #featureset[-1][0]["word_length"] = self.word_length(token_dic)
                     #featureset[-1][0]["pos_first_character"] = self.pos_first_character(token_dic)
-                    #featureset[-1][0]["lemma"] = self.lemma(token_dic)
-                    #featureset[-1][0]["lemma_backwards"] = self.lemma_backwards(token_dic)
-                    #featureset[-1][0]["lemma_every_second"] = self.lemma_every_second(token_dic)
+                    ##featureset[-1][0]["lemma"] = self.lemma(token_dic)
+                    ##featureset[-1][0]["lemma_backwards"] = self.lemma_backwards(token_dic)
+                    ##featureset[-1][0]["lemma_every_second"] = self.lemma_every_second(token_dic)
                     #featureset[-1][0]["segment_id"] = self.segment_id(token_dic)
                     #featureset[-1][0]["sent_id"] = self.sent_id(token_dic)
                     #featureset[-1][0]["word_id"] = self.word_id(token_dic)
@@ -60,8 +62,8 @@ class FeatureExtractor:
                     #featureset[-1][0]["previous_complete_verb_in_sent"] = self.previous_complete_verb_in_sent(index, corpus)
                     #featureset[-1][0]["previous_complete_verb_in_sent_distance"] = self.previous_complete_verb_in_sent_distance(index, corpus)
                     #featureset[-1][0]["previous_word"] = self.previous_word(index, corpus)
-                    #featureset[-1][0]["next_lemma"] = self.next_lemma(index, corpus)
-                    #featureset[-1][0]["previous_lemma"] = self.previous_lemma(index, corpus)
+                    ##featureset[-1][0]["next_lemma"] = self.next_lemma(index, corpus)
+                    ##featureset[-1][0]["previous_lemma"] = self.previous_lemma(index, corpus)
                     #featureset[-1][0]["next_pos"] = self.next_pos(index, corpus)
                     #featureset[-1][0]["previous_pos"] = self.previous_pos(index, corpus)
                     #featureset[-1][0]["find_word_in_sentence74"] = self.find_word_in_sentence74(token_dic)
@@ -85,18 +87,51 @@ class FeatureExtractor:
                     #featureset[-1][0]["all_digits"] = self.all_digits(token_dic)
                     #featureset[-1][0]["find_Mensch"] = self.find_Mensch(token_dic)
 
+
+                    if (random.random() < 0.7):
+                        featureset[-1][0]["lemma"] = self.lemma(token_dic)
+
+                    if (random.random() < 0.6):
+                        featureset[-1][0]["lemma_backwards"] = self.lemma_backwards(token_dic)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["lemma_every_second"] = self.lemma_every_second(token_dic)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["next_lemma"] = self.next_lemma(index, corpus)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["previous_lemma"] = self.previous_lemma(index, corpus)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["pos"] = self.pos(token_dic)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["next_pos"] = self.next_pos(index, corpus)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["previous_pos"] = self.previous_pos(index, corpus)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["next_word"] = self.next_word(index, corpus)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["previous_word_capitalized"] = self.previous_word_capitalized(index, corpus)
+
+                    if (random.random() < 0.5):
+                        featureset[-1][0]["next_word_capitalized"] = self.next_word_capitalized(index, corpus)
         return featureset
 
 
 	#####################################################################
 	# THESE ARE ALL THE DIFFERENT POSSIBLE FEATURE EXTRACTION FUNCTIONS #
 	#####################################################################
-	
+
 	# This function returns the part of speech tag of the word
     def pos(self, word_dic):
         return word_dic["pos"]
 
-	
+
 	# This function returns the word itself
     def surface(self, word_dic):
         return word_dic["surface"]
@@ -129,7 +164,7 @@ class FeatureExtractor:
 	# This function returns the length of the word
     def word_length(self, word_dic):
         return len(word_dic["surface"])
-		
+
 	# This function returns the segment_id of the segment the word occurs in
     def segment_id(self, word_dic):
         return word_dic["segment_id"]
@@ -283,7 +318,7 @@ class FeatureExtractor:
              return corpus[index-1]["surface"]
         else:
             return None
-	
+
 	# This function returns the lemma of the following word
 	# if there is no following lemma (e.g. when there is no following word) the function returns "None"
     def next_lemma(self, index, corpus):
@@ -292,7 +327,7 @@ class FeatureExtractor:
                 return corpus[index+1]["lemma"]
         except IndexError:
             return None
-	
+
 	# This function returns the lemma of the previous word
 	# if there is no previous lemma (e.g. when there is no previous word) the function returns "None"
     def previous_lemma(self, index, corpus):
@@ -355,7 +390,7 @@ class FeatureExtractor:
         string_only_non_vowels = "".join([string for string in word_dic["surface"] if string not in vowels])
         return string_only_non_vowels
 
-	# This function returns the length of the sentence the word occurs in 
+	# This function returns the length of the sentence the word occurs in
     def sent_length(self, word_dic):
         return word_dic["sent_len"]
 
@@ -365,26 +400,26 @@ class FeatureExtractor:
            return True
         else:
             return False
-			
+
 	# This function returns "True" if the word only consists of ASCII-characters, "False" otherwise
     def word_is_ascii(self, word_dic):
         return all(ord(char) < 128 for char in word_dic["surface"])
-        
+
 	# This function returns "True" if the word starts with a capital letter, "False" otherwise
     def capitalized(self, word_dic):
         if word_dic["surface"][0].isupper():
             return True
         else:
             return False
-            
-    # This function returns "True" if the previous word starts with a capital letter, "False" otherwise       
+
+    # This function returns "True" if the previous word starts with a capital letter, "False" otherwise
     def previous_word_capitalized(self, index, corpus):
         if corpus[index-1]["sent_id"] == corpus[index]["sent_id"]:
             if corpus[index-1]["surface"][0].isupper():
                 return True
             else:
                 return False
-   
+
 	# This function returns "True" if the next word starts with a capital letter, "False" otherwise
 	# if there is no following word (e.g. when the word itself is already the last word) the function returns "None"
     def next_word_capitalized(self, index, corpus):
@@ -400,16 +435,16 @@ class FeatureExtractor:
     # This function returns the fifth word of the corpus
     def fifth_word(self, index, corpus):
         return corpus[5]["surface"]
-    
+
 	# This function returns "True" if the word only consists of capitalized letters, "False" otherwise
     def all_upper_case(self, word_dic):
         if word_dic["surface"].isupper():
             return True
         else:
             return False
-			
+
     # This function returns "True" if the previous word only consists of capitalized letters, "False" otherwise
-	# if there is no previous word (e.g. when the word itself is the first word) the function returns "None"	
+	# if there is no previous word (e.g. when the word itself is the first word) the function returns "None"
     def previous_word_all_upper_case(self, index, corpus):
         if corpus[index-1]["sent_id"] == corpus[index]["sent_id"]:
             if corpus[index-1]["surface"].isupper():
@@ -418,7 +453,7 @@ class FeatureExtractor:
                 return False
 
 	# This function returns "True" if the next word only consists of capitalized letters, "False" otherwise
-	# if there is no following word (e.g. when the word itself is already the last word) the function returns "None"	
+	# if there is no following word (e.g. when the word itself is already the last word) the function returns "None"
     def next_word_all_upper_case(self, index, corpus):
         try:
             if corpus[index+1]["sent_id"] == corpus[index]["sent_id"]:
@@ -428,8 +463,8 @@ class FeatureExtractor:
                     return False
         except IndexError:
             return None
-    
-	# This function returns "True" if one of the suffixes are found at the end of the word, "False" otherwise 
+
+	# This function returns "True" if one of the suffixes are found at the end of the word, "False" otherwise
     def suffix(self, word_dic):
         suffix = "ung", "ling", "heit", "schaft", "keit"
         if word_dic["surface"].endswith(suffix):
@@ -444,7 +479,7 @@ class FeatureExtractor:
     # This suffix-function returns the last three characters of a word
     def suffix_3(self, word_dic):
         return word_dic["surface"][-3:]
-    
+
 	# This function returns "True" if the word only consists of numbers, "False" otherwise
     def all_digits(self, word_dic):
         if word_dic["surface"].isdigit():
